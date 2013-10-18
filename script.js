@@ -298,3 +298,30 @@ console.log(computer.processor) // Intel
 console.log(computer.brand) // undefined
 console.log(computer.type) // Machine
 console.log(computer)
+
+console.log('===================================================')
+
+/* A function always returns a value. If the return value is not specified, then undefined
+ * is returned.
+ *
+ * If the function was invoked with the new prefix and the return value is not an object,
+ * then this (the new object) is returned instead. */
+
+// Exceptions
+
+function go() {
+  throw {
+    name: 'MyError',
+    message: 'Some message'
+  }
+}
+// go() // throws exception
+
+function ok() {
+  try {
+    go()
+  } catch (e) {
+    console.log(e)
+  }
+} // catch exception
+ok()
