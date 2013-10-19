@@ -325,3 +325,89 @@ function ok() {
   }
 } // catch exception
 ok()
+
+console.log('===================================================')
+
+String.prototype.sayHello = function() {
+  return 'Hello ' + this
+}
+var name = 'Ala'
+console.log(name.sayHello()); // Hello Ala
+
+String.prototype.trim = function() {
+  return this.replace(/^\s+|\s+$/g, '')
+}
+var input = 'Ala      '
+console.log(input.trim() + '!') // Ala!
+
+
+/* In many modern languages, it is recommended that variables be declared as late as
+ * possible, at the first point of use. That turns out to be bad advice for JavaScript
+ * because it lacks block scope. So instead, it is best to declare all of the variables used
+ * in a function at the top of the function body. */
+
+/* The good news about scope is that inner functions get access to the parameters and
+ * variables of the functions they are defined within (with the exception of this and
+ * arguments). This is a very good thing. */
+
+/* We can use functions and closure to make modules. A module is a function or object
+ * that presents an interface but that hides its state and implementation. By using functions
+ * to produce modules, we can almost completely eliminate our use of global variables,
+ * thereby mitigating one of JavaScript’s worst features. */
+
+/* Cascade:
+ *
+ * getElement('myBoxDiv')
+ * .move(350, 150)
+ * .width(100)
+ * .height(100)
+ * .color('red') */
+
+
+// =============================================
+
+// 3 lines required to make harry_potter
+var harry_potter = new Object();
+harry_potter.pages = 350;
+harry_potter.author = "J.K. Rowling";
+
+// A custom constructor for book
+function Book (pages, author) {
+    this.pages = pages;
+    this.author = author;
+}
+
+// Use our new constructor to make the_hobbit in one line
+var the_hobbit = new Book(320, 'J.R.R. Tolkien')
+
+// =============================================
+
+function Circle (radius) {
+    this.radius = radius;
+    this.area = function () {
+        return Math.PI * this.radius * this.radius;
+        
+    };
+    // define a perimeter method here
+    this.perimeter = function() {
+        return 2 * Math.PI * this.radius;
+    }
+};
+
+// =============================================
+
+function Dog (breed) {
+  this.breed = breed;
+};
+
+// here we make buddy and teach him how to bark
+var buddy = new Dog("golden Retriever");
+Dog.prototype.bark = function() {
+  console.log("Woof");
+};
+buddy.bark();
+
+// here we make snoopy
+var snoopy = new Dog("Beagle");
+/// this time it works!
+snoopy.bark();
