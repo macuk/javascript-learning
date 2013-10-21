@@ -411,3 +411,136 @@ buddy.bark();
 var snoopy = new Dog("Beagle");
 /// this time it works!
 snoopy.bark();
+
+// =============================================
+
+// the original Animal class and sayName method
+function Animal(name, numLegs) {
+    this.name = name;
+    this.numLegs = numLegs;
+}
+Animal.prototype.sayName = function() {
+    console.log("Hi my name is " + this.name);
+};
+
+// define a Penguin class
+function Penguin(name) {
+    this.name = name
+    this.numLegs = 2
+}
+
+// set its prototype to be a new instance of Animal
+Penguin.prototype = new Animal()
+
+// =============================================
+
+function Person(first,last,age) {
+   this.firstname = first; // public
+   this.lastname = last;   // public
+   this.age = age;         // public
+   var bankBalance = 7500; // private
+}
+
+// =============================================
+// how to access private variables -- through method
+
+function Person(first,last,age) {
+   this.firstname = first;
+   this.lastname = last;
+   this.age = age;
+   var bankBalance = 7500;
+  
+   this.getBalance = function() {
+      // your code should return the bankBalance
+      return bankBalance
+   };
+}
+
+var john = new Person('John','Smith',30);
+console.log(john.bankBalance); // undefined
+
+// create a new variable myBalance that calls getBalance()
+var myBalance = john.getBalance()
+console.log(myBalance) // 7500
+
+// =============================================
+// how to access private methods -- through public method
+
+function Person(first,last,age) {
+   this.firstname = first;
+   this.lastname = last;
+   this.age = age;
+   var bankBalance = 7500;
+  
+   var returnBalance = function() {
+      return bankBalance;
+   };
+       
+   // create the new function here
+   this.askTeller = function() {
+       return returnBalance;
+   }
+   
+}
+
+var john = new Person('John','Smith',30);
+console.log(john.returnBalance); // undefined
+var myBalanceMethod = john.askTeller();
+var myBalance = myBalanceMethod();
+console.log(myBalance); // 7500
+
+// =============================================
+// Building a Cash Register
+
+function StaffMember(name,discountPercent){
+    this.name = name;
+    this.discountPercent = discountPercent;
+}
+
+var sally = new StaffMember("Sally",5);
+var bob = new StaffMember("Bob",10);
+
+// Create yourself again as 'me' with a staff discount of 20%
+var me = new StaffMember("Peter",20);
+
+var cashRegister = {
+    total:0,
+    lastTransactionAmount: 0,
+    add: function(itemCost){
+        this.total += (itemCost || 0);
+        this.lastTransactionAmount = itemCost;
+    },
+    scan: function(item,quantity){
+        switch (item){
+        case "eggs": this.add(0.98 * quantity); break;
+        case "milk": this.add(1.23 * quantity); break;
+        case "magazine": this.add(4.99 * quantity); break;
+        case "chocolate": this.add(0.45 * quantity); break;
+        }
+        return true;
+    },
+    voidLastTransaction : function(){
+        this.total -= this.lastTransactionAmount;
+        this.lastTransactionAmount = 0;
+    },
+    // Create a new method applyStaffDiscount here
+    applyStaffDiscount: function (employee) {
+        this.total -= this.total * employee.discountPercent / 100;
+    }
+    
+    
+};
+
+cashRegister.scan('eggs',1);
+cashRegister.scan('milk',1);
+cashRegister.scan('magazine',3);
+// Apply your staff discount by passing the 'me' object 
+// to applyStaffDiscount
+cashRegister.applyStaffDiscount(me)
+
+
+// Show the total bill
+console.log('Your bill is '+cashRegister.total.toFixed(2));
+
+// =============================================
+// http://www.codecademy.com/glossary/javascript
